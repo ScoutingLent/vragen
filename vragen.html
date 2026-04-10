@@ -116,18 +116,9 @@ qnum.addEventListener("input", () => {
 // ------------------ Google Forms API (juiste entry-ID’s) ------------------
 
 async function updateScore(team, points) {
-  const url = "https://docs.google.com/forms/d/e/1FAIpQLSfmc3LsLx5LWZDuNrkUrJ58LHlSjSt_1cX1QnHzIRewlcgrXg/formResponse";
-
-  const data = new FormData();
-  data.append("entry.1045781291", team);   // teamnummer
-  data.append("entry.839337160", points);  // punten
-
-  await fetch(url, {
-    method: "POST",
-    body: data,
-    mode: "no-cors"
-  });
-
+  console.log("TEAM =", team);
+  console.log("POINTS =", points);
+  alert("Team: " + team + "\nPunten: " + points);
   return { status: "ok" };
 }
 
