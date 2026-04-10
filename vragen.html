@@ -136,17 +136,23 @@ async function updateScore(team, points) {
 
   return newScore;
 }
-
 save.onclick = async () => {
   // Knop direct uitschakelen om dubbel klikken te voorkomen
   save.disabled = true;
   save.textContent = "Bezig...";
 
-  const teamNr = team.value;
-  const pts = points.value;
-  const newScore = await updateScore(teamNr, pts);
+  try {
+    const teamNr = document.getElementById("team").value;
+    const pts = document.getElementById("points").value;
 
-  status.textContent = `Ploeg ${teamNr} heeft nu ${newScore} punten.`;
+    const newScore = await updateScore(teamNr, pts);
+
+    status.textContent = `Ploeg ${teamNr} heeft nu ${newScore} punten.`;
+  } 
+  catch (err) {
+    console.error(err);
+    status.textContent = "Er ging iets mis bij het opslaan.";
+  }
 
   // Na 2 seconden knop weer inschakelen
   setTimeout(() => {
