@@ -23,13 +23,15 @@ th { background: #f0f0f0; }
 </table>
 
 <script>
-const SHEET_ID = "2PACX-1vSXISV3P8SaG7S3gLh8Glu_LOS75VjGopD9qErBGIv2FANpfFfFkEhBK32_vFofjh4noV7mV3SRMqpk";
+const SHEET_ID = "1VlxKeOuqBrPIv5M5TRm6nOZ2kMY-1gicyA6akJUevDo";
 
 async function loadScores() {
   const data = await fetch(`https://opensheet.elk.sh/${SHEET_ID}/scores`).then(r => r.json());
-  data.sort((a,b) => b.punten - a.punten);
 
-  scores.innerHTML = data.map(r =>
+  // punten als getal sorteren
+  data.sort((a, b) => Number(b.punten) - Number(a.punten));
+
+  document.getElementById("scores").innerHTML = data.map(r =>
     `<tr><td>${r.ploeg}</td><td>${r.punten}</td></tr>`
   ).join("");
 }
