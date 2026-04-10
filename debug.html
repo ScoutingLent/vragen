@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<title>Google Forms Entry-ID Debugger</title>
+<style>
+body { font-family: Arial; max-width: 700px; margin: 20px auto; }
+code { background: #eee; padding: 3px 6px; border-radius: 4px; }
+</style>
+</head>
+<body>
+
+<h2>Google Forms Entry‑ID Debugger</h2>
+<p>Hieronder verschijnen alle <code>entry.xxxxx</code> velden die jouw formulier gebruikt.</p>
+<p>Gebruik dit om te bepalen welke entry‑ID bij teamnummer en punten hoort.</p>
+
+<div id="output">Bezig met laden…</div>
+
+<script>
+(async () => {
+  const formUrl = "https://docs.google.com/forms/d/e/1FAIpQLSfmc3LsLx5LWZDuNrkUrJ58LHlSjSt_1cX1QnHzIRewlcgrXg/viewform";
+
+  try {
+    const html = await (await fetch(formUrl)).text();
+    const div = document.createElement("div");
+    div.innerHTML = html;
+
+    const fields = div.querySelectorAll("input[name^='entry.'], textarea[name^='entry.']");
+
+    let out = "<h3>Gevonden entry‑velden:</h3>";
+
+    if (fields.length === 0) {
+      out += "<p><b>Geen entry‑velden gevonden.</b><br>Dit betekent dat Google Forms jouw velden in een shadow‑DOM heeft geplaatst. Dan moet ik een alternatieve methode gebruiken.</p>";
+    } else {
+      fields.forEach(f => {
+        out += `<p><code>${f.name}</code> (type: ${f.type})</p>`;
+      });
+    }
+
+    document.getElementById("output").innerHTML = out;
+
+  } catch (err) {
+    document.getElementById("output").innerHTML = "<p>Fout bij laden van formulier.</p>";
+  }
+})();
+</script>
+
+</body>
+</html>
