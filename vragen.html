@@ -138,11 +138,21 @@ async function updateScore(team, points) {
 }
 
 save.onclick = async () => {
+  // Knop direct uitschakelen om dubbel klikken te voorkomen
+  save.disabled = true;
+  save.textContent = "Bezig...";
+
   const teamNr = team.value;
   const pts = points.value;
   const newScore = await updateScore(teamNr, pts);
+
   status.textContent = `Ploeg ${teamNr} heeft nu ${newScore} punten.`;
+
+  // Als je wilt dat de knop weer bruikbaar wordt, haal de comments weg:
+  // save.disabled = false;
+  // save.textContent = "Opslaan";
 };
+
 </script>
 </body>
 </html>
