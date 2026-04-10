@@ -119,8 +119,8 @@ async function updateScore(team, points) {
   const url = "https://docs.google.com/forms/d/e/1FAIpQLSfmc3LsLx5LWZDuNrkUrJ58LHlSjSt_1cX1QnHzIRewlcgrXg/formResponse";
 
   const data = new FormData();
-  data.append("entry.2130559191", team);   // Teamnummer
-  data.append("entry.1507465234", points); // Punten
+  data.append("entry.1045781291", team);   // teamnummer
+  data.append("entry.839337160", points);  // punten
 
   await fetch(url, {
     method: "POST",
@@ -129,6 +129,8 @@ async function updateScore(team, points) {
   });
 
   return { status: "ok" };
+}
+
 }
 
 save.onclick = async () => {
