@@ -148,9 +148,11 @@ save.onclick = async () => {
 
   status.textContent = `Ploeg ${teamNr} heeft nu ${newScore} punten.`;
 
-  // Als je wilt dat de knop weer bruikbaar wordt, haal de comments weg:
-  // save.disabled = false;
-  // save.textContent = "Opslaan";
+  // Na 2 seconden knop weer inschakelen
+  setTimeout(() => {
+    save.disabled = false;
+    save.textContent = "Opslaan";
+  }, 2000);
 };
 
 </script>
