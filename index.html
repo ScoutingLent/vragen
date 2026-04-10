@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Willekeurige Vraag</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background: #f5f5f5;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+        margin: 0;
+        padding: 20px;
+        text-align: center;
+    }
+    #question {
+        font-size: 1.6rem;
+        margin-bottom: 30px;
+        max-width: 600px;
+    }
+    button {
+        padding: 15px 25px;
+        font-size: 1.2rem;
+        border: none;
+        border-radius: 8px;
+        background: #0078ff;
+        color: white;
+        cursor: pointer;
+    }
+    button:hover {
+        background: #005fcc;
+    }
+</style>
+</head>
+<body>
+
+<h2>Willekeurige Vraag</h2>
+<div id="question">Klik op de knop voor een vraag</div>
+<button onclick="showRandomQuestion()">Nieuwe vraag</button>
+
+<script>
+const questions = [
+"Zing het RSW lied",
+"Doe een dansje",
+"Doe elk 10 pushups",
+"Wie was de koning van zweden in 1630",
+"Vindt een andere groep en breng ze mee",
+"Wie was de meest bekende tovenaar",
+"zoek 3 verschillende bladeren",
+"Ren met de patrouille 100 meter weg en terug",
+"in welke eeuw was koning arthur koning?",
+"in welke eeuw speelt de grijze jager zich af?",
+"Uit welk land komt onze koningin?",
+"Waar komt Willem van oranje vandaan?",
+"Op welke dag viel 1 januari in het jaar 1 na Christus?",
+"In welk jaar is de Europese Unie opgericht?",
+"Wat is de grootste religie ter wereld?",
+"Welke plaats ligt het dichtst bij het middelpunt van Nederland?",
+"Wat is de volgorde van de Waddeneilanden van west naar oost?",
+"Hoe heet het stukje België dat is omringd door Nederland?",
+"In welke plaats ligt het enige drielandenpunt in Nederland?",
+"Hoeveel gemeenten kent Nederland sinds 2024?",
+"Welke planeet staat het dichtst bij de zon?",
+"Wat is het scheikundige symbool voor goud?",
+"Is 57 een priemgetal?",
+"Welk sterrenbeeld ben je als je precies in het midden van het jaar jarig bent?",
+"Vanuit welke windrichting waait de wind meestal in Nederland en België?",
+"Hoeveel graden Celsius is 300 Kelvin?",
+"Hoelang doet de aarde erover om rond de zon te draaien?",
+"Ik heb twee positief geladen objecten, trekken deze elkaar aan?",
+"Welke kleur heeft de zwarte doos in een vliegtuig?",
+"Hoeveel maanden hebben minimaal 28 dagen?",
+"Hoeveel kilometer lang is een marathon?",
+"Welk land won het WK in Qatar?",
+"Wat is de meest verkochte auto ter wereld?",
+"Welke kleur skipiste is het makkelijkst?",
+"Wat is de langste snelweg in Nederland?",
+"Wat is het bestverkochte bordspel ter wereld?",
+"Welk automerk heeft een stier in zijn logo?",
+"Is een padelbal lichter, even zwaar of zwaarder dan een tennisbal?",
+"Hoe heet de wijk in New York waar elk jaar de US open wordt gehouden?",
+"Wat is in de Elfstedentocht de laatste stempelplaats voor Leeuwarden?",
+"Wat is de meest gesproken taal ter wereld?",
+"Wat is de hoofdstad van Australië?",
+"Wat was de eerste disneyfilm ooit gemaakt?",
+"Hoe hoog is de eiffeltoren?",
+"Wie was de eerste vrouwelijke premier van het verenigd koninkrijk?",
+"Welke kleuren heeft de Ierse vlag?",
+"Wie schilderde de Mona Lisa?",
+"Welk land staat bekend als het land van de glimlach?",
+"Welk land heeft de minste inwoners?",
+"Hoe heet de roze vriend van Winnie de Poeh?",
+"Wat is het grootste orgaan van het menselijk lichaam?",
+"Wat is het enige zoogdier dat niet kan springen?",
+"Wat is het enige zoogdier dat kan vliegen?",
+"In welk deel van het lichaam wordt insuline aangemaakt?",
+"Hoeveel magen heeft een koe?",
+"Welke hondensoort is het grootst?",
+"Mensen behoren tot de klasse zoogdieren. Tot welke klasse behoren kikkers?",
+"Is een dolfijn een vis?",
+"Welk dier is het oudst?",
+"Wat is sneller, een struisvogel of een coyote?"
+];
+
+function showRandomQuestion() {
+    const randomIndex = Math.floor(Math.random() * questions.length);
+    document.getElementById("question").innerText = questions[randomIndex];
+}
+</script>
+
+</body>
+</html>
