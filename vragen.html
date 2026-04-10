@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Punten toekennen</title>
+<style>
+body { font-family: Arial; max-width: 600px; margin: 20px auto; }
+label { display: block; margin-top: 15px; }
+input, select, button { width: 100%; padding: 8px; margin-top: 5px; }
+#answer { margin-top: 15px; font-weight: bold; }
+#status { margin-top: 15px; color: green; }
+</style>
+</head>
+<body>
+
+<h2>Punten toekennen</h2>
+
+<label>Vraagnummer:
+  <input type="number" id="qnum" min="1" max="60">
+</label>
+
+<div id="answer">Antwoord verschijnt hier…</div>
+
+<label>Ploegnummer:
+  <input type="number" id="team" min="1" max="35">
+</label>
+
+<label>Punten:
+  <select id="points">
+    <option value="0">0</option>
+    <option value="5">5</option>
+    <option value="10">10</option>
+  </select>
+</label>
+
+<button id="save">Opslaan</button>
+
+<div id="status"></div>
+
+<script>
+// ------------------ Vragen + antwoorden ------------------
+const qa = [
+  "Zing het RSW-lied|De opdracht is: zing het RSW-lied.",
+  "Doe een dansje|De opdracht is: doe een dansje.",
+  "Doe elk 10 pushups|Iedereen doet 10 push-ups.",
+  "Wie was de koning van Zweden in 1630?|Gustaaf II Adolf.",
+  "Vindt een andere groep en breng ze mee|Zoek een andere groep en breng ze mee.",
+  "Wie was de meest bekende tovenaar?|Merlijn (Merlin).",
+  "Zoek 3 verschillende bladeren|Zoek drie verschillende soorten bladeren.",
+  "Ren 100 meter heen en terug|Ren 100 meter heen en terug.",
+  "In welke eeuw was koning Arthur koning?|5e–6e eeuw (legendarisch).",
+  "In welke eeuw speelt de Grijze Jager?|12e–13e eeuw (fictief).",
+  "Uit welk land komt onze koningin?|Argentinië.",
+  "Waar komt Willem van Oranje vandaan?|Dillenburg (Duitsland).",
+  "Op welke dag viel 1 januari jaar 1?|Maandag (proleptische kalender).",
+  "In welk jaar is de EU opgericht?|1993.",
+  "Wat is de grootste religie?|Christendom.",
+  "Welke plaats ligt bij het middelpunt NL?|Lunteren.",
+  "Waddeneilanden west→oost?|Texel, Vlieland, Terschelling, Ameland, Schiermonnikoog.",
+  "Belgisch stukje in NL?|Baarle-Hertog.",
+  "Waar ligt het drielandenpunt?|Vaals.",
+  "Hoeveel gemeenten heeft NL?|342.",
+  "Planeet dichtst bij de zon?|Mercurius.",
+  "Symbool voor goud?|Au.",
+  "Is 57 een priemgetal?|Nee, 3×19.",
+  "Sterrenbeeld midden van het jaar?|Kreeft.",
+  "Meest voorkomende windrichting?|Zuidwest.",
+  "300 Kelvin in Celsius?|27 °C.",
+  "Aarde rond de zon?|365 dagen.",
+  "Twee positieve ladingen?|Ze stoten af.",
+  "Kleur zwarte doos?|Oranje.",
+  "Hoeveel maanden 28 dagen?|Alle 12.",
+  "Lengte marathon?|42,195 km.",
+  "Wie won WK Qatar?|Argentinië.",
+  "Meest verkochte auto?|Toyota Corolla.",
+  "Makkelijkste skipiste?|Groen (of blauw).",
+  "Langste snelweg NL?|A2.",
+  "Meest verkocht bordspel?|Schaken / Monopoly.",
+  "Merk met stier?|Lamborghini.",
+  "Padelbal vs tennisbal?|Padelbal is lichter.",
+  "Waar US Open?|Flushing Meadows (Queens).",
+  "Laatste stempel Elfstedentocht?|Dokkum.",
+  "Meest gesproken taal?|Engels.",
+  "Hoofdstad Australië?|Canberra.",
+  "Eerste Disneyfilm?|Sneeuwwitje (1937).",
+  "Hoogte Eiffeltoren?|324 m.",
+  "Eerste vrouwelijke premier VK?|Margaret Thatcher.",
+  "Kleuren Ierse vlag?|Groen-wit-oranje.",
+  "Wie schilderde Mona Lisa?|Leonardo da Vinci.",
+  "Land van de glimlach?|Thailand.",
+  "Land met minste inwoners?|Vaticaanstad.",
+  "Roze vriend van Winnie de Poeh?|Knorretje.",
+  "Grootste orgaan?|De huid.",
+  "Zoogdier dat niet kan springen?|Olifant.",
+  "Zoogdier dat kan vliegen?|Vleermuis.",
+  "Waar wordt insuline gemaakt?|Alvleesklier.",
+  "Hoeveel magen heeft een koe?|Vier.",
+  "Grootste hondensoort?|Duitse dog.",
+  "Tot welke klasse behoren kikkers?|Amfibieën.",
+  "Is een dolfijn een vis?|Nee, een zoogdier.",
+  "Oudste diergroep?|Hoefijzerkrab.",
+  "Wat is sneller?|Struisvogel."
+];
+
+qnum.addEventListener("input", () => {
+  const n = parseInt(qnum.value);
+  if (n >= 1 && n <= 60) {
+    const [q, a] = qa[n - 1].split("|");
+    answer.textContent = "Antwoord: " + a;
+  } else {
+    answer.textContent = "Ongeldig vraagnummer.";
+  }
+});
+
+// ------------------ Google Sheets API ------------------
+const SHEET_ID = "2PACX-1vSXISV3P8SaG7S3gLh8Glu_LOS75VjGopD9qErBGIv2FANpfFfFkEhBK32_vFofjh4noV7mV3SRMqpk";
+
+async function getScores() {
+  return fetch(`https://opensheet.elk.sh/${SHEET_ID}/scores`).then(r => r.json());
+}
+
+async function updateScore(team, points) {
+  const data = await getScores();
+  const row = data.find(r => r.ploeg == team);
+  const newScore = Number(row.punten) + Number(points);
+
+  await fetch(`https://api.sheetson.com/v2/sheets/scores/ploeg/${team}`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+      "Authorization": "Bearer sheetson"
+    },
+    body: JSON.stringify({ punten: newScore })
+  });
+
+  return newScore;
+}
+
+save.onclick = async () => {
+  const teamNr = team.value;
+  const pts = points.value;
+  const newScore = await updateScore(teamNr, pts);
+  status.textContent = `Ploeg ${teamNr} heeft nu ${newScore} punten.`;
+};
+</script>
+</body>
+</html>

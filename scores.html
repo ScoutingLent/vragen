@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Scorebord</title>
+<style>
+body { font-family: Arial; max-width: 600px; margin: 20px auto; text-align: center; }
+table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+th, td { padding: 10px; border-bottom: 1px solid #ccc; }
+th { background: #f0f0f0; }
+</style>
+</head>
+<body>
+
+<h2>Live Scorebord</h2>
+
+<table>
+<thead>
+<tr><th>Ploeg</th><th>Punten</th></tr>
+</thead>
+<tbody id="scores"></tbody>
+</table>
+
+<script>
+const SHEET_ID = "2PACX-1vSXISV3P8SaG7S3gLh8Glu_LOS75VjGopD9qErBGIv2FANpfFfFkEhBK32_vFofjh4noV7mV3SRMqpk";
+
+async function loadScores() {
+  const data = await fetch(`https://opensheet.elk.sh/${SHEET_ID}/scores`).then(r => r.json());
+  data.sort((a,b) => b.punten - a.punten);
+
+  scores.innerHTML = data.map(r =>
+    `<tr><td>${r.ploeg}</td><td>${r.punten}</td></tr>`
+  ).join("");
+}
+
+loadScores();
+setInterval(loadScores, 5000);
+</script>
+
+</body>
+</html>

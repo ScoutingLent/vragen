@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Beheer</title>
+<style>
+body { font-family: Arial; max-width: 600px; margin: 20px auto; }
+input, button { width: 100%; padding: 10px; margin-top: 10px; }
+#panel { display: none; }
+#status { margin-top: 15px; color: green; }
+</style>
+</head>
+<body>
+
+<h2>Beheerpagina</h2>
+
+<label>Wachtwoord:
+  <input type="password" id="pw">
+</label>
+<button onclick="checkPW()">Inloggen</button>
+
+<div id="panel">
+  <h3>Score aanpassen</h3>
+
+  <label>Ploegnummer:
+    <input type="number" id="team" min="1" max="35">
+  </label>
+
+  <label>Nieuwe score:
+    <input type="number" id="newscore">
+  </label>
+
+  <button onclick="saveScore()">Opslaan</button>
+
+  <div id="status"></div>
+</div>
+
+<script>
+const PASSWORD = "SL2026RSW";
+const SHEET_ID = "2PACX-1vSXISV3P8SaG7S3gLh8Glu_LOS75VjGopD9qErBGIv2FANpfFfFkEhBK32_vFofjh4noV7mV3SRMqpk";
+
+function checkPW() {
+  if (pw.value === PASSWORD) {
+    panel.style.display = "block";
+  } else {
+    alert("Wachtwoord onjuist");
+  }
+}
+
+async function saveScore() {
+  const team = team.value;
+  const score = newscore.value;
+
+  await fetch(`https://api.sheetson.com/v2/sheets/scores/ploeg/${team}`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+      "Authorization": "Bearer sheetson"
+    },
+    body: JSON.stringify({ punten: score })
+  });
+
+  status.textContent = `Score van ploeg ${team} is nu ${score}.`;
+}
+</script>
+
+</body>
+</html>
