@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Antwoorden</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .container {
+            max-width: 500px;
+            margin: auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        input {
+            width: 100%;
+            padding: 10px;
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+        button {
+            width: 100%;
+            padding: 12px;
+            font-size: 18px;
+            background: #0077cc;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background: #005fa3;
+        }
+        #antwoord {
+            margin-top: 20px;
+            font-size: 20px;
+            font-weight: bold;
+        }
+        .score-btn {
+            margin-top: 30px;
+            background: #28a745;
+        }
+        .score-btn:hover {
+            background: #1e7e34;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Antwoord opzoeken</h2>
+
+    <input type="number" id="nummer" placeholder="Voer een nummer in...">
+
+    <button onclick="toonAntwoord()">Toon antwoord</button>
+
+    <div id="antwoord"></div>
+
+    <button class="score-btn" onclick="window.location.href='https://scoreleader.com/u/89C1T0F?admin=40732a05ea764f8eabf4a8fc01e4ff6e'">
+        Ga naar ScoreLeader
+    </button>
+</div>
+
+<script>
+    // Vul hier jouw antwoorden in:
+    const antwoorden = {
+        1: "Dit is antwoord 1",
+        2: "Dit is antwoord 2",
+        3: "Nog een voorbeeldantwoord",
+        // ... vul door tot al jouw nummers erin staan
+    };
+
+    function toonAntwoord() {
+        const nummer = document.getElementById("nummer").value;
+        const antwoordVak = document.getElementById("antwoord");
+
+        if (antwoorden[nummer]) {
+            antwoordVak.textContent = antwoorden[nummer];
+        } else {
+            antwoordVak.textContent = "Geen antwoord gevonden voor dit nummer.";
+        }
+    }
+</script>
+
+</body>
+</html>
